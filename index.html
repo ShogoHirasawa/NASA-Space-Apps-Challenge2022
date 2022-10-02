@@ -28,32 +28,41 @@
   <body>
     <div id="map"></div>
     <script>
+      const map = new maplibregl.Map(mapOptions);
 
-      const map = new maplibregl.Map(mapOptions)
+      map.addSource("scene1", {
+        type: "raster",
+        tiles: [
+          "shogohirasawa.github.io/NASA-Space-Apps-Challenge2022//{z}/{x}/{y}.png",
+        ],
+      });
+      map.addSource("scene1", {
+        type: "raster",
+        tiles: [
+          "https://furuhashilab.github.io/2021gsc_ShogoHirasawa/futakotamagawac_ RT/{z}/{x}/{y}.png",
+        ],
+      });
+      map.addLayer({
+        id: "scene1",
+        type: "raster",
+        source: "scene1",
+      });
 
-      // anyLayerはmaplibreレイヤーのオブジェクト
-      map.addLayer(anyLayer1_1)
-      map.addLayer(anyLayer1_2)
-      map.addLayer(anyLayer2_1)
-      map.addLayer(anyLayer2_2)
-      map.addLayer(anyLayer3_1)
-      map.addLayer(anyLayer3_2)
-
-      import TemporalControl from 'maplibre-gl-temporal-control';
+      import TemporalControl from "maplibre-gl-temporal-control";
 
       // アニメ表示の各フレームを定義
       const temporalFrames = [
-          {
-              title:'frame1', // 時系列コントロールに表示されるタイトル
-              layers:[anyLayer1_1, anyLayer1_2] // 1フレームに表示したいレイヤーの配列
-          },
-          // 任意の数のフレーム
-      ]
+        {
+          title: "frame1", // 時系列コントロールに表示されるタイトル
+          layers: [scene1], // 1フレームに表示したいレイヤーの配列
+        },
+        // 任意の数のフレーム
+      ];
 
       const temporalControl = new TemporalControl(temporalFrames, {
-          interval: 100, // 1フレームあたりの表示秒数、ms単位
-          position: 'top-left',
-          performance: true // アニメ表示のパフォーマンスを向上させるフラグ
+        interval: 100, // 1フレームあたりの表示秒数、ms単位
+        position: "top-left",
+        performance: true, // アニメ表示のパフォーマンスを向上させるフラグ
       });
       map.addControl(temporalControl);
     </script>
