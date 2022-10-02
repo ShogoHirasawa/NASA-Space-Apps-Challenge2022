@@ -2,16 +2,16 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Add a raster tile source</title>
+    <title>UStempMap2021</title>
     <meta
       name="viewport"
       content="initial-scale=1,maximum-scale=1,user-scalable=no"
     />
+    <script src="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.js"></script>
     <link
-      href="https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.css"
+      href="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css"
       rel="stylesheet"
     />
-    <script src="https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.js"></script>
     <style>
       body {
         margin: 0;
@@ -28,34 +28,34 @@
   <body>
     <div id="map"></div>
     <script>
-      mapboxgl.accessToken =
-        "pk.eyJ1Ijoic2hvZ29oaXJhc2F3YSIsImEiOiJjazFhbzVrMG0yNmxjM2xuaTBmM3h0dW4wIn0.Bxjy09jy_cwOQVexF1xBfg";
-      const map = new mapboxgl.Map({
-        container: "map", // container ID
-        style: {
-          version: 8,
-          sources: {
-            "raster-tiles": {
-              type: "raster",
-              tiles: [
-                "https://shogohirasawa.github.io/NASA-Space-Apps-Challenge2022/tmp/{z}/{x}/{y}.png",
-              ],
-              tileSize: 512,
-            },
+
+      const map = new maplibregl.Map(mapOptions)
+
+      // anyLayerはmaplibreレイヤーのオブジェクト
+      map.addLayer(anyLayer1_1)
+      map.addLayer(anyLayer1_2)
+      map.addLayer(anyLayer2_1)
+      map.addLayer(anyLayer2_2)
+      map.addLayer(anyLayer3_1)
+      map.addLayer(anyLayer3_2)
+
+      import TemporalControl from 'maplibre-gl-temporal-control';
+
+      // アニメ表示の各フレームを定義
+      const temporalFrames = [
+          {
+              title:'frame1', // 時系列コントロールに表示されるタイトル
+              layers:[anyLayer1_1, anyLayer1_2] // 1フレームに表示したいレイヤーの配列
           },
-          layers: [
-            {
-              id: "simple-tiles",
-              type: "raster",
-              source: "raster-tiles",
-              minzoom: 0,
-              maxzoom: 8,
-            },
-          ],
-        },
-        center: [-74.5, 40], // starting position
-        zoom: 2, // starting zoom
+          // 任意の数のフレーム
+      ]
+
+      const temporalControl = new TemporalControl(temporalFrames, {
+          interval: 100, // 1フレームあたりの表示秒数、ms単位
+          position: 'top-left',
+          performance: true // アニメ表示のパフォーマンスを向上させるフラグ
       });
+      map.addControl(temporalControl);
     </script>
   </body>
 </html>
