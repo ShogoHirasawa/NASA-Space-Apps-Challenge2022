@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "2021-10",
+"features": [
+{ "type": "Feature", "properties": { "name": "アラバマ州マーシャル群", "": "2021-10-06" }, "geometry": { "type": "Point", "coordinates": [ -86.2107, 34.2631 ] } },
+{ "type": "Feature", "properties": { "name": "カルフォニア州北部", "": "2021-10-24" }, "geometry": { "type": "Point", "coordinates": [ -122.3153948, 40.12794043 ] } }
+]
+}
